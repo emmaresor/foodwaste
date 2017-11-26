@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Wasted </title>
+        <meta="viewport" content="initial-scale=1.0, user-scalable=no"/>
+        <script type="text/javascript">
+            function addFood(){
+                var list = document.createElement("LI");
+                var food_input = document.getElementById("add-food").value;
+                var quantity_input = document.getElementById("add-quantity").value;
+                var expiration_input = document.getElementById("add-expiration").value;
+
+                var days_left = calcExpiration(expiration_input);
+
+                list.innerHTML = "You have " + quantity_input + " " + food_input + " that expire in " + days_left + " days.";
+
+                document.getElementById("food-list").appendChild(list);
+                //var newFood = { "food":input, "expiration_date":12/14/17, "quantity":5};
+                //var myJSON = JSON.stringify(myObj);
+                //window.location = "demo_json.php?x=" + myJSON;
+            }
+
+            function calcExpiration(expiration_input){
+                var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+                var today = new Date();
+                var expiration_date = new Date(expiration_input);
+
+                var days_left = Math.round(Math.abs((today.getTime() - expiration_date.getTime())/(oneDay))) + 1;
+                return days_left;
+            }
+
+        </script>
+    </head>
+    <body id="home">
+        <h1> Wasted: Track Your Food to Eliminate Waste!</h1>
+
+        <div id="add-content">
+            <form>
+                Add Food: <input type="text" id="add-food"><br>
+                Quantity: <input type="text" id="add-quantity"><br>
+                Expiration Date: <input type="date" id="add-expiration"><br>
+                <input type="button" id="add" value="Add" onclick="addFood()"><br>
+            </form>
+
+        </div>
+        <div id="foods">
+            <h3> My Food: </h3>
+            <ol id="food-list"></ol>
+        </div>
+    </body>
+</html>
